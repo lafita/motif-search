@@ -12,7 +12,7 @@
 			<AppenderRef ref="Console"/>
 			<!-- <AppenderRef ref="File" /> -->
 		</Root>
-		<Logger name="naive" level="info" additivity="false">
+		<Logger name="main" level="info" additivity="false">
 			<AppenderRef ref="Console"/>
 		</Logger>
 	</Loggers>

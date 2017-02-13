@@ -7,24 +7,19 @@ package main;
  *
  */
 class MotifParams {
-
-	/**
-	 * Path to the Hadoop sequence file of the PDB.
-	 */
-	static final String HADOOP_SEQ_FILE = "/scratch/full-201605";
 	
 	/**
-	 * Length of the helix.
+	 * Length in residues of the helical regions at the N and C terminus.
 	 */
 	static final int HELIX_LENGTH = 15;
 	
 	/**
-	 * Minimum chain length to consider.
+	 * Minimum length of the chains to consider.
 	 */
-	static final int CHAIN_LENGTH = 400;
+	static final int CHAIN_LENGTH = 300;
 	
 	/**
-	 * Distance in A from the N to the C terminal helix regions
+	 * Distance in Amstrongs from the N to the C terminal helical regions.
 	 */
 	static final double NC_DISTANCE = 11.0;
 
