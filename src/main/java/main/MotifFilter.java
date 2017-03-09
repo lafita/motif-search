@@ -37,7 +37,13 @@ public class MotifFilter implements Predicate<Structure> {
 				return false;
 			
 			logger.debug("Evaluating " + s.getIdentifier());
-
+			
+			// Check the minimum and maximum oligomeric states
+			if (s.getChains().size() < MotifParams.MIN_OLIGO)
+				return false;
+			if (s.getChains().size() > MotifParams.MAX_OLIGO)
+				return false;
+			
 			// Assign the secondary structure
 			DSSPParser.fetch(s.getIdentifier(), s, true);
 

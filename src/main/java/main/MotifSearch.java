@@ -28,7 +28,7 @@ public class MotifSearch {
 				// Parse the structures
 				.map(t -> {
 					try {
-						return StructureIO.getStructure(t);
+						return StructureIO.getBiologicalAssembly(t, true);
 					} catch (IOException | StructureException e) {
 						return null;
 					}
