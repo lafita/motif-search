@@ -46,7 +46,7 @@ public class MotifFilter implements Predicate<Structure> {
 				// Short chains or non protein are discarded
 				Atom[] atomArray = StructureTools.getRepresentativeAtomArray(c);
 				int chainLen = atomArray.length;
-				if (chainLen < MotifParams.CHAIN_LENGTH | !c.isProtein())
+				if (chainLen < MotifParams.CHAIN_LENGTH | !StructureTools.isProtein(c))
 					continue;
 
 				boolean cont = false;
