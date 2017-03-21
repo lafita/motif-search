@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 
 import org.biojava.nbio.structure.Atom;
 import org.biojava.nbio.structure.Calc;
@@ -83,7 +84,7 @@ public class MotifFilter implements Predicate<String> {
 				if (cont)
 					continue;
 				
-				logger.info("Passed condition 1 " + t);
+				logger.info("There is a helix in the N-terminus: " + t);
 
 				// Check the helix in the C-terminal
 				for (int ter = 0; ter < MotifParams.HELIX_LENGTH; ter++) {
@@ -98,23 +99,52 @@ public class MotifFilter implements Predicate<String> {
 				if (cont)
 					continue;
 				
-				logger.info("Passed condition 2 " + t);
+				logger.info("There is a helix in the C-terminus: " + t);
 
 				// Check for the distance from N to C-terminal regions
 				Point3d centroidN = CalcPoint.centroid(Arrays.copyOfRange(
-						Calc.atomsToPoints(atomArray), 0, MotifParams.HELIX_LENGTH));
+						Calc.atomsToPoints(atomArray), 1, MotifParams.HELIX_LENGTH));
 				
 				Point3d centroidC = CalcPoint.centroid(Arrays.copyOfRange(
 						Calc.atomsToPoints(atomArray), chainLen - MotifParams.HELIX_LENGTH, chainLen));
 
-				if (Math.abs(centroidN.distance(centroidC) - MotifParams.NC_DISTANCE) < 1) {
-					logger.info("Found a hit: " + t);
+				double distance = centroidN.distance(centroidC);
+				logger.debug(String.format("The two terminal helices are at %.0f A apart: %s", 
+								distance, t));
+						
+				if (Math.abs(distance - MotifParams.NC_DISTANCE) > MotifParams.NC_DISTANCE_EPSILON)
+					return false;
+				
+				logger.info("The two terminal helices are at the specified disatance: " + t);
+				
+				// Calculate a starting and ending point of each helix using centroid of 3 residues
+				Point3d startN = CalcPoint.centroid(Arrays.copyOfRange(
+						Calc.atomsToPoints(atomArray), 1, 4));
+				Point3d endN = CalcPoint.centroid(Arrays.copyOfRange(
+						Calc.atomsToPoints(atomArray), MotifParams.HELIX_LENGTH - 3, MotifParams.HELIX_LENGTH));
+
+				Point3d startC = CalcPoint.centroid(Arrays.copyOfRange(
+						Calc.atomsToPoints(atomArray), chainLen - MotifParams.HELIX_LENGTH, chainLen + 3 - MotifParams.HELIX_LENGTH));
+				Point3d endC = CalcPoint.centroid(Arrays.copyOfRange(
+						Calc.atomsToPoints(atomArray), chainLen - 3, chainLen));
+				
+				// Check parallel helical vectors
+				Vector3d helixN = new Vector3d();
+				helixN.sub(endN, startN);
+				helixN.normalize();
+				
+				Vector3d helixC = new Vector3d();
+				helixC.sub(startC, endC);
+				helixC.normalize();
+				
+				double angle = helixN.angle(helixC);
+				logger.debug(String.format("The two terminal helices are at %.0f degrees: %s", 
+						Math.toDegrees(angle), t));
+				
+				if (angle < MotifParams.MAX_HELIX_ANGLE){
+					logger.info("The two terminal helices are parallel: " + t);
 					return true;
 				}
-				
-				// TODO check parallel helical vectors
-				
-				
 				
 			}
 
