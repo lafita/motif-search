@@ -16,7 +16,7 @@ class MotifParams {
 	/**
 	 * Minimum length of the chains to consider.
 	 */
-	static final int CHAIN_LENGTH = 200;
+	static final int CHAIN_LENGTH = 100;
 	
 	/**
 	 * Distance in Amstrongs from the N to the C terminal helical regions.
@@ -31,6 +31,6 @@ class MotifParams {
 	/**
 	 * Max oligomeric state.
 	 */
-	static final double MAX_OLIGO = 10;
+	static final double MAX_OLIGO = 100;
 	
 }
