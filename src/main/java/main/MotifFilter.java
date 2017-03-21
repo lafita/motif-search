@@ -54,11 +54,13 @@ public class MotifFilter implements Predicate<String> {
 			
 			// Assign the secondary structure
 			try {
-				DSSPParser.fetch(t, s, true);
-			} catch(Exception e){
-				logger.warn("DSSP fetch for " + t + " failed: " + e);
+				
 				SecStrucCalc dssp = new SecStrucCalc();
 				dssp.calculate(s, true);
+			} catch(Exception e){
+				logger.warn("DSSP fetch for " + t + " failed: " + e);
+				DSSPParser.fetch(t, s, true);
+				
 			}
 
 			for (Chain c : s.getChains()) {
@@ -74,6 +76,10 @@ public class MotifFilter implements Predicate<String> {
 				// Check the helix in the N-terminal
 				for (int ter = 0; ter < MotifParams.HELIX_LENGTH; ter++) {
 					SecStrucState ss = (SecStrucState) atomArray[ter + 1].getGroup().getProperty(Group.SEC_STRUC);
+					if (ss == null){
+						logger.warn("Ignoring residue without SS assignment: " + t);
+						continue;
+					}
 					if (!ss.getType().isHelixType()) {
 						cont = true;
 						break;
@@ -89,6 +95,10 @@ public class MotifFilter implements Predicate<String> {
 				// Check the helix in the C-terminal
 				for (int ter = 0; ter < MotifParams.HELIX_LENGTH; ter++) {
 					SecStrucState ss = (SecStrucState) atomArray[chainLen - 2 - ter].getGroup().getProperty(Group.SEC_STRUC);
+					if (ss == null){
+						logger.warn("Ignoring residue without SS assignment: " + t);
+						continue;
+					}
 					if (!ss.getType().isHelixType()) {
 						cont = true;
 						break;

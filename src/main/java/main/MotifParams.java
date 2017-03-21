@@ -16,7 +16,7 @@ class MotifParams {
 	/**
 	 * Max oligomeric state.
 	 */
-	static final double MAX_OLIGO = 100;
+	static final double MAX_OLIGO = 10;
 
 	/**
 	 * Minimum length of the chains to consider. This has to always be higher
