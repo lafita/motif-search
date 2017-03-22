@@ -54,13 +54,11 @@ public class MotifFilter implements Predicate<String> {
 			
 			// Assign the secondary structure
 			try {
-				
-				SecStrucCalc dssp = new SecStrucCalc();
-				dssp.calculate(s, true);
+				DSSPParser.fetch(t, s, true);
 			} catch(Exception e){
 				logger.warn("DSSP fetch for " + t + " failed: " + e);
-				DSSPParser.fetch(t, s, true);
-				
+				SecStrucCalc dssp = new SecStrucCalc();
+				dssp.calculate(s, true);
 			}
 
 			for (Chain c : s.getChains()) {
