@@ -4,9 +4,9 @@ This repository contains a script written in Java and based on the [BioJava](htt
 
 ## Installation
 
-Clone the repository and install dependencies using maven.
+Clone the repository and install dependencies using [Maven](https://maven.apache.org) with `mvn install`.
 
 ## Usage
 
-Motify the search criteria in the [MotifParams](https://github.com/lafita/motif-search/blob/master/src/main/java/main/MotifParams.java) class and run the [MotifSearch](https://github.com/lafita/motif-search/blob/master/src/main/java/main/MotifSearch.java) to start scanning PDB structures automatically.
+Modify search criteria in the [MotifParams](https://github.com/lafita/motif-search/blob/master/src/main/java/main/MotifParams.java) class and run the [MotifSearch](https://github.com/lafita/motif-search/blob/master/src/main/java/main/MotifSearch.java) script to start scanning PDB structures automatically.
 The list of PDB IDs matching the search criteria will be printed to the standard output.
