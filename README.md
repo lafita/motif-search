@@ -2,6 +2,8 @@
 
 This repository contains a script written in Java and based on the [BioJava](https://github.com/biojava/biojava) library to search for protein structures in the PDB that fulfill certain structural requirements.
 
+The script was originally created to search for candidates for a fusion protein with two antiparallel terminal helices separated 11Å apart, in order to be able to solve its structure experimentally.
+
 ## Installation
 
 Clone the repository and install dependencies using [Maven](https://maven.apache.org) with `mvn install`.
